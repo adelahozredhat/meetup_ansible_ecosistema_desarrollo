@@ -1,0 +1,64 @@
+{
+    "_meta": {
+        "hostvars": {
+            "eiproast18.host.es": {
+                
+                        "system_code": "PAQBI",
+                        "system_description": "SERVIDORES PAQUETIZACION BPI",
+                        "host_environment": "dsvp",
+                        "environment_description": "Dev / Test Participades",
+                        "center": "c2",
+                        "security_zone": "mz",
+                        "business_group": "BPI",
+                        "ansible_connection": "ssh",
+                        "ansible_user": "eiproast19.host.es",
+                        "ansible_host": "eiproast19.host.es"
+            },
+            "eiproast19.host.es": {
+                
+                        "system_code": "PAQBI",
+                        "system_description": "SERVIDORES PAQUETIZACION BPI",
+                        "host_environment": "dsvp",
+                        "environment_description": "Dev / Test Participades",
+                        "center": "c2",
+                        "security_zone": "mz",
+                        "business_group": "BPI",
+                        "ansible_connection": "ssh",
+                        "ansible_user": "eiproast19.host.es",
+                        "ansible_host": "eiproast19.host.es"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "group001",
+            "group002",
+            "ungrouped"
+        ],"vars": {
+                "ansible_winrm_cert_pem": "/var/lib/awx/connection_keys/winrm/host/host_cert.pem",
+                "ansible_winrm_cert_key_pem": "/var/lib/awx/connection_keys/winrm/host/host_key.pem",
+                "ansible_winrm_server_cert_validation": "ignore",
+                "ansible_winrm_read_timeout_sec": 120,
+                "ansible_winrm_transport": "certificate",
+                "ansible_ssh_private_key_file": "/var/lib/awx/connection_keys/ssh/host/id_rsa"
+            }
+    },
+    "group001": {
+        "hosts": [
+            "eiproast18.host.es"
+        ],
+        "vars": {
+            "var1": true
+        },
+        "children": ["group002"]
+    },
+    "group002": {
+        "hosts": [
+            "eiproast19.host.es"
+        ],
+        "vars": {
+            "var2": 500
+        },
+        "children":[]
+    }
+}

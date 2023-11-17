@@ -1,0 +1,10 @@
+{
+    "docs": "https://docs.ansible.com/ansible-core/2.15/dev_guide/testing/sanity/ansible-doc.html", 
+    "results": [
+        {
+            "message": "The test `ansible-test sanity --test ansible-doc` [[explain](https://docs.ansible.com/ansible-core/2.15/dev_guide/testing/sanity/ansible-doc.html)] failed with the error:", 
+            "output": "Output on stderr from ansible-doc is considered an error.\n\nCommand \"ansible-doc -t module namespace_example.collection_example.get_servers\" returned exit status 0.\n>>> Standard Error\n[WARNING]: Collection namespace_example.collection_example does not support\nAnsible version 2.15.2"
+        }
+    ], 
+    "verified": false
+}

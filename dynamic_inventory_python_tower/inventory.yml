@@ -1,0 +1,22 @@
+---
+all:
+  children:
+    group001:
+      hosts:
+        eiproast18.host.es:
+          group001:
+            hosts:
+            - eiproast18.host.es
+          group002:
+            hosts:
+            - eiproast19.host.es
+    group002:
+      hosts:
+        eiproast19.host.es:
+          group001:
+            hosts:
+            - eiproast18.host.es
+          group002:
+            hosts:
+            - eiproast19.host.es
+    ungrouped: {}

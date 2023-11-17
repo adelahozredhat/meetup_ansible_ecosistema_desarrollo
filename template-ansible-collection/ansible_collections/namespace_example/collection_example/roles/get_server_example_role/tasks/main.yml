@@ -1,0 +1,22 @@
+---
+- name: Example get information
+  get_servers:
+    username: "{{ example_username }}"
+    password: "{{ example_password }}"
+    url: "{{ example_url }}"
+    proxy: "{{ example_proxy }}"
+    techgroups: "{{ example_techgroups }}"
+    environment: "{{ example_environment }}"
+  notify: HandlerRun
+  register: info_servers
+
+- name: Debug info
+  debug:
+    msg: "{{ info_servers }}"
+
+- name: Copy file
+  copy:
+    content: "copy"
+    dest: prueba.txt
+    mode: '0644'
+  notify: HandlerRun

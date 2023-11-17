@@ -1,0 +1,96 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    openshift.io/cluster-monitoring: "true"
+  name: ansible-automation-platform
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: ansible-automation-platform-operator
+  namespace: ansible-automation-platform
+spec:
+  targetNamespaces:
+    - ansible-automation-platform
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: ansible-automation-platform
+  namespace: ansible-automation-platform
+spec:
+  channel: 'stable-2.4'
+  installPlanApproval: Automatic
+  name: ansible-automation-platform-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: aap-admin-password
+  namespace: ansible-automation-platform
+data:
+  password: cmVkaGF0MDA=
+type: Opaque
+---
+apiVersion: automationcontroller.ansible.com/v1beta1
+kind: AutomationController
+metadata:
+  name: aap-example
+  namespace: ansible-automation-platform
+spec:
+  postgres_keepalives_count: 5
+  postgres_keepalives_idle: 5
+  create_preload_data: true
+  route_tls_termination_mechanism: Edge
+  garbage_collect_secrets: false
+  ingress_type: Route
+  loadbalancer_port: 80
+  no_log: true
+  image_pull_policy: IfNotPresent
+  projects_storage_size: 8Gi
+  auto_upgrade: true
+  task_privileged: false
+  postgres_keepalives: true
+  postgres_keepalives_interval: 5
+  ipv6_disabled: false
+  projects_storage_access_mode: ReadWriteMany
+  set_self_labels: true
+  projects_persistence: false
+  replicas: 1
+  admin_user: admin
+  loadbalancer_protocol: http
+  admin_password_secret: aap-admin-password
+
+
+# oc get routes aap-example -n ansible-automation-platform --output jsonpath={.spec.host}
+# ---
+# apiVersion: eda.ansible.com/v1alpha1
+# kind: EDA
+# metadata:
+#   name: eda-example
+#   namespace: ansible-automation-platform
+# spec:
+#   route_tls_termination_mechanism: Edge
+#   ingress_type: Route
+#   loadbalancer_port: 80
+#   no_log: true
+#   image_pull_policy: IfNotPresent
+#   ui:
+#     replicas: 1
+#   set_self_labels: true
+#   api:
+#     gunicorn_workers: 2
+#     replicas: 1
+#   redis:
+#     replicas: 1
+#   admin_user: admin
+#   loadbalancer_protocol: http
+#   worker:
+#     replicas: 0
+#   automation_server_url: >-
+#     {{automation_server_url}}
+#   admin_password_secret: aap-admin-password

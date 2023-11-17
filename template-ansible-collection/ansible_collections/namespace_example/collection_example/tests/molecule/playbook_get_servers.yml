@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  gather_facts: false
+  collections:
+    - namespace_example.collection_example
+  tasks:
+    - name: 'Testing module get_servers'
+      get_servers:
+        techgroups:
+          - C-TTS-TS-INFRA-CLOUD-CIT
+          - I-SSO-ES-TS-BBDD-FILIALS
+        username: ATOWER1
+        password: mypassword
+
+        url: 'https://adelahozredhat.github.io/json_rest_examples/prueba.json'
+      register: result
+    - name: debug
+      debug:
+        var: result

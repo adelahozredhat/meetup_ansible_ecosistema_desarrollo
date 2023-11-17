@@ -1,0 +1,37 @@
+---
+
+---
+apiVersion: eda.ansible.com/v1alpha1
+kind: EDA
+metadata:
+  name: eda-example
+  namespace: ansible-automation-platform
+spec:
+  route_tls_termination_mechanism: Edge
+  ingress_type: Route
+  loadbalancer_port: 80
+  no_log: true
+  image_pull_policy: IfNotPresent
+  ui:
+    replicas: 1
+  set_self_labels: true
+  api:
+    gunicorn_workers: 2
+    replicas: 1
+  redis:
+    replicas: 1
+  admin_user: admin
+  loadbalancer_protocol: http
+  worker:
+    replicas: 1
+  automation_server_url: >-
+    https://aap-example-ansible-automation-platform.apps-crc.testing
+  admin_password_secret: aap-admin-password
+
+
+# oc get routes eda-example -n ansible-automation-platform --output jsonpath={.spec.host}
+# curl -H 'Content-Type: application/json' -d "{\"message\": \"team01quarkus\"}" http://eda-activation-job-ansible-automation-platform.apps.cluster-jxvvv.jxvvv.sandbox1950.opentlc.com/send
+# curl -H 'Content-Type: application/json' -d "{\"message\": \"team02ansible\"}" http://eda-activation-job-ansible-automation-platform.apps.cluster-jxvvv.jxvvv.sandbox1950.opentlc.com/send
+# curl -H 'Content-Type: application/json' -d "{\"message\": \"team03tekton\"}" http://eda-activation-job-ansible-automation-platform.apps.cluster-jxvvv.jxvvv.sandbox1950.opentlc.com/send
+# curl -H 'Content-Type: application/json' -d "{\"message\": \"team04argo\"}" http://eda-activation-job-ansible-automation-platform.apps.cluster-jxvvv.jxvvv.sandbox1950.opentlc.com/send
+# curl -H 'Content-Type: application/json' -d "{\"message\": \"team05podman\"}" http://eda-activation-job-ansible-automation-platform.apps.cluster-jxvvv.jxvvv.sandbox1950.opentlc.com/send
